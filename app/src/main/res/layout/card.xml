@@ -4,10 +4,11 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:minHeight="100dp"
+    android:minWidth="196dp"
+    app:cardElevation="10dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center"
     android:layout_margin="@dimen/five_dp_m"
-    android:backgroundTint="@color/purple_200"
     app:cardCornerRadius="@dimen/ten_dp_radius">
 
     <RelativeLayout

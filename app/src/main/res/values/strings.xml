@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">My Shop Manager</string>
     <string name="add_item">this button use to add items</string>
+    <string name="ava_item">Total Ava: %1$s</string>
+    <string name="used_item">Total Use: %1$s</string>
+    <string name="total_item">Total Item: %1$s</string>
+    <string name="add_item_here">Add Item Here</string>
+    <string name="enter_item_name">Enter Item Name</string>
+    <string name="enter_total_item">Enter Total item</string>
+    <string name="add">add item</string>
+    <string name="detail">Detail</string>
+    <string name="x">X</string>
+    <string name="history">History</string>
+    <string name="update_use">update use</string>
 </resources>
