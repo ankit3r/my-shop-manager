@@ -6,12 +6,8 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.View
-import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.annotation.RequiresApi
-import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -22,38 +18,35 @@ import com.gyanhub.myshopmanager.application.MyApplication
 import com.gyanhub.myshopmanager.databinding.ActivityMainBinding
 import com.gyanhub.myshopmanager.model.ItemsHistory
 import com.gyanhub.myshopmanager.model.MyShopModel
-import com.gyanhub.myshopmanager.repository.MyShopRepo
-import com.gyanhub.myshopmanager.roomDB.RoomDb
 import com.gyanhub.myshopmanager.viewModel.MainFactory
 import com.gyanhub.myshopmanager.viewModel.MainViewModel
 import java.time.LocalDateTime
 
 @RequiresApi(Build.VERSION_CODES.O)
+@SuppressLint("NotifyDataSetChanged")
 class MainActivity : AppCompatActivity(), ItemClick {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var searchView: SearchView
     private lateinit var mainAdapter: MainActivityAdapter
     private lateinit var mainModel: MainViewModel
     private lateinit var dialog: Dialog
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         rcView()
+
+        val repository = (application as MyApplication).MyShopRepository
+
+        mainModel = ViewModelProvider(this, MainFactory(repository))[MainViewModel::class.java]
+
+        mainModel.getItem()
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = true
             mainModel.getItem()
             binding.swipeRefreshLayout.isRefreshing = false
         }
-        val repository = (application as MyApplication).MyShopRepository
-
-        mainModel = ViewModelProvider(
-            this,
-            MainFactory(repository)
-        )[MainViewModel::class.java]
-
-        mainModel.getItem()
 
         mainModel.data.observe(this) {
             mainAdapter = MainActivityAdapter(this, it, this)
@@ -64,41 +57,9 @@ class MainActivity : AppCompatActivity(), ItemClick {
             bottomSheet()
         }
 
-
         dialog = Dialog(this)
-
-
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        val searchItem = menu!!.findItem(R.id.action_search)
-        searchView = searchItem.actionView as SearchView
-        searchView.queryHint = "Search Item"
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                hideKeyboard(searchView)
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                return false
-            }
-        })
-
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    fun hideKeyboard(view: View) {
-        val inputMethodManager =
-            view.context.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
-        view.clearFocus()
-    }
-
-
-    @SuppressLint("NotifyDataSetChanged")
     private fun bottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(R.layout.apply_bottom_sheet)
@@ -199,48 +160,49 @@ class MainActivity : AppCompatActivity(), ItemClick {
             it.setBackgroundResource(R.drawable.select_item)
         }
 
-
-
         dialog.findViewById<Button>(R.id.btnUpdate).setOnClickListener {
             val currentDateTime = LocalDateTime.now()
             val currentDate =
                 "${currentDateTime.dayOfMonth}-${currentDateTime.monthValue}-${currentDateTime.year}"
             val currentTime = "${currentDateTime.hour}:${currentDateTime.minute}"
 
-            val update = item.history.toMutableList().apply {
-
-            }
-
-
-
-
-
 
             if (type == "Used") {
-                Toast.makeText(this, "used", Toast.LENGTH_SHORT).show()
-                val usedItemCount = item.itemUsed + count.text.toString().toInt()
-                val avaItemCount = item.totalItem - usedItemCount
-                mainModel.update(
-                    MyShopModel(
-                        item.id,
-                        item.itemName,
-                        avaItemCount,
-                        item.totalItem,
-                        usedItemCount,
-                        item.history.toMutableList().apply {
-                            add(ItemsHistory(
-                                currentDate,
-                                currentTime,
-                                count?.text.toString().toInt(),
-                                type
-                            ))
-                        }
+                if (count.text.toString().toInt() <= item.itemAva) {
+                    val usedItemCount = item.itemUsed + count.text.toString().toInt()
+                    val avaItemCount = item.totalItem - usedItemCount
+                    mainModel.update(
+                        MyShopModel(
+                            item.id,
+                            item.itemName,
+                            avaItemCount,
+                            item.totalItem,
+                            usedItemCount,
+                            item.history.toMutableList().apply {
+                                add(
+                                    ItemsHistory(
+                                        currentDate,
+                                        currentTime,
+                                        count?.text.toString().toInt(),
+                                        type
+                                    )
+                                )
+                            }
 
+                        )
                     )
-                )
-            }
-            else if (type == "Add") {
-                Toast.makeText(this, "added", Toast.LENGTH_SHORT).show()
+                    mainModel.getItem()
+                    mainAdapter.notifyDataSetChanged()
+                    dialog.dismiss()
+                } else {
+                    count.hint = "you enter max ${item.itemAva}"
+                    Toast.makeText(
+                        this,
+                        "You Haven't available that many items \nyou have Available items : ${item.itemAva} ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } else if (type == "Add") {
                 val total = item.totalItem + count?.text.toString().toInt()
                 val avaItemCount = item.itemAva + count?.text.toString().toInt()
                 mainModel.update(
@@ -251,22 +213,23 @@ class MainActivity : AppCompatActivity(), ItemClick {
                         total,
                         item.itemUsed,
                         item.history.toMutableList().apply {
-                            add(ItemsHistory(
-                                currentDate,
-                                currentTime,
-                                count?.text.toString().toInt(),
-                                type
-                            ))
+                            add(
+                                ItemsHistory(
+                                    currentDate,
+                                    currentTime,
+                                    count?.text.toString().toInt(),
+                                    type
+                                )
+                            )
                         }
                     )
                 )
-            }
-            else {
+                mainModel.getItem()
+                mainAdapter.notifyDataSetChanged()
+                dialog.dismiss()
+            } else {
                 Toast.makeText(this, "place select update type", Toast.LENGTH_SHORT).show()
             }
-
-
         }
-
     }
 }
