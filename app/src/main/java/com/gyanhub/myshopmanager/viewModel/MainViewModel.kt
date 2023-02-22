@@ -14,6 +14,7 @@ class MainViewModel(private val myShopRepository: MyShopRepo):ViewModel() {
     private  val shopLiveDatas= MutableLiveData<List<MyShopModel>>()
     val data : LiveData<List<MyShopModel>>
         get() = shopLiveDatas
+    lateinit var myShopData : MyShopModel
 
     fun getItem(){
         viewModelScope.launch(Dispatchers.IO){
@@ -24,6 +25,14 @@ class MainViewModel(private val myShopRepository: MyShopRepo):ViewModel() {
         viewModelScope.launch {
             myShopRepository.addItems(item)
         }
+    }
+
+    fun getHistoryById(id:Int):MyShopModel{
+        return myShopRepository.getItemById(id)
+    }
+
+    fun update(item:MyShopModel){
+        myShopRepository.updateShopItem(item)
     }
 
 }

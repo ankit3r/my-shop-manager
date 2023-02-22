@@ -26,4 +26,12 @@ class MyShopRepo(private val dao: MyShopDao) {
        return dao.getItem()
     }
 
+     fun getItemById(id:Int): MyShopModel{
+       return dao.getItemById(id)
+    }
+
+   fun updateShopItem(item:MyShopModel){
+        dao.updateItemHistory(item)
+    }
+
 }

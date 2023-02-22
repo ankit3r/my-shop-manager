@@ -1,7 +1,6 @@
 package com.gyanhub.myshopmanager.roomDB
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -18,6 +17,11 @@ interface MyShopDao {
     suspend fun getItem(): List<MyShopModel>
 
     @Update
-    suspend fun updateItemHistory(item:MyShopModel)
+    fun updateItemHistory(item:MyShopModel)
+
+
+    @Query("SELECT * FROM MyShop WHERE id = :itemId")
+    fun getItemById(itemId: Int): MyShopModel
+
 
 }

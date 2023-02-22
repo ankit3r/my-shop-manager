@@ -11,5 +11,10 @@
     <string name="detail">Detail</string>
     <string name="x">X</string>
     <string name="history">History</string>
-    <string name="update_use">update use</string>
+    <string name="update_use">update</string>
+    <string name="close">use for close dialoge</string>
+    <string name="update_dialog">Update Dialog</string>
+    <string name="add_more_item">Add More Item</string>
+    <string name="today_use_update">Today Use Update</string>
+    <string name="enter_update_no">Enter Update No</string>
 </resources>

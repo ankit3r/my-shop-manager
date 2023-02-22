@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/cardOfHistory"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:minHeight="50dp"
+    app:cardElevation="@dimen/ten_dp_radius"
+    app:cardCornerRadius="@dimen/ten_dp_radius"
+    android:layout_gravity="center">
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_gravity="center"
+       android:minHeight="50dp"
+       android:gravity="center"
+       android:layout_height="wrap_content">
+       <TextView
+           android:id="@+id/txtTypeH"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/add"
+           android:textColor="@color/black"
+            android:layout_weight="1"
+           style="@style/textStyle18"/>
+       <TextView
+           android:id="@+id/txtItemCountH"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/add"
+           android:textColor="@color/black"
+           android:layout_weight="1"
+           style="@style/textStyle18"/>
+       <TextView
+           android:id="@+id/txtDateTime"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/add"
+           android:textColor="@color/black"
+           android:layout_weight="1"
+           style="@style/textStyle18"/>
+   </LinearLayout>
+
+</androidx.cardview.widget.CardView>
