@@ -33,12 +33,10 @@ class MainActivity : AppCompatActivity(), ItemClick {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         rcView()
-
         val repository = (application as MyApplication).MyShopRepository
-
         mainModel = ViewModelProvider(this, MainFactory(repository))[MainViewModel::class.java]
-
         mainModel.getItem()
+
         binding.swipeRefreshLayout.setOnRefreshListener {
             binding.swipeRefreshLayout.isRefreshing = true
             mainModel.getItem()
@@ -100,7 +98,6 @@ class MainActivity : AppCompatActivity(), ItemClick {
     private fun rcView() {
         val displayMetrics = resources.displayMetrics
         val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
-
         val columnCount = when {
             screenWidthDp >= 1200 -> 5
             screenWidthDp >= 800 -> 4
@@ -141,7 +138,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
     }
 
     private fun updateDialogBox(item: MyShopModel) {
-        var type = "no"
+
         dialog.show()
         dialog.setCancelable(false)
         dialog.setContentView(R.layout.update_dialoge_layout)
@@ -150,13 +147,13 @@ class MainActivity : AppCompatActivity(), ItemClick {
         val add = dialog.findViewById<TextView>(R.id.selectAddMore)
         val updateUsed = dialog.findViewById<TextView>(R.id.selectUseUpdate)
         add.setOnClickListener {
-            type = "Add"
+            mainModel.type = "Add"
             updateUsed.setBackgroundResource(R.drawable.unselect_item)
             it.setBackgroundResource(R.drawable.select_item)
 
         }
         updateUsed.setOnClickListener {
-            type = "Used"
+            mainModel.type = "Used"
             add.setBackgroundResource(R.drawable.unselect_item)
             it.setBackgroundResource(R.drawable.select_item)
         }
@@ -171,7 +168,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
                 "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
 
 
-            if (type == "Used") {
+            if (mainModel.type == "Used") {
                 if (count.text.toString().toInt() <= item.itemAva) {
                     val usedItemCount = item.itemUsed + count.text.toString().toInt()
                     val avaItemCount = item.totalItem - usedItemCount
@@ -188,7 +185,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
                                         currentDate,
                                         currentTime,
                                         count?.text.toString().toInt(),
-                                        type
+                                        mainModel.type
                                     )
                                 )
                             }
@@ -206,7 +203,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            } else if (type == "Add") {
+            } else if ( mainModel.type == "Add") {
                 val total = item.totalItem + count?.text.toString().toInt()
                 val avaItemCount = item.itemAva + count?.text.toString().toInt()
                 mainModel.update(
@@ -222,7 +219,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
                                     currentDate,
                                     currentTime,
                                     count?.text.toString().toInt(),
-                                    type
+                                    mainModel.type
                                 )
                             )
                         }

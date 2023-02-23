@@ -14,13 +14,14 @@ class MainViewModel(private val myShopRepository: MyShopRepo):ViewModel() {
     private  val shopLiveDatas= MutableLiveData<List<MyShopModel>>()
     val data : LiveData<List<MyShopModel>>
         get() = shopLiveDatas
-    lateinit var myShopData : MyShopModel
+    var type = "no"
 
     fun getItem(){
         viewModelScope.launch(Dispatchers.IO){
             shopLiveDatas.postValue(myShopRepository.getMyShop())
         }
     }
+
     fun addShopItem(item : MyShopModel){
         viewModelScope.launch {
             myShopRepository.addItems(item)
