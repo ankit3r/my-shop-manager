@@ -12,13 +12,11 @@ import java.util.ArrayList
 class MyShopRepo(private val dao: MyShopDao) {
 
 
-    suspend fun addItems(item:MyShopModel) : NetworkResult<Unit>{
-        return try {
+     fun addItems(item:MyShopModel){
+       try {
             dao.addItemsInDb(item)
-            NetworkResult.Success(Unit)
         } catch (e: SQLiteConstraintException) {
-            Log.e("MyRepository", "Error inserting entity: ${e.message}")
-            NetworkResult.Error("Entity already exists")
+            Log.d("ANKIT","Error $e")
         }
 
     }

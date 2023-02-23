@@ -2,6 +2,8 @@ package com.gyanhub.myshopmanager.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import com.gyanhub.myshopmanager.adapters.HistoryAdapter
 import com.gyanhub.myshopmanager.application.MyApplication
@@ -29,4 +31,19 @@ class FragmentHolderActivity : AppCompatActivity() {
 
 
     }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
 }

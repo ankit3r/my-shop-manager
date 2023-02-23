@@ -3,11 +3,9 @@ package com.gyanhub.myshopmanager.activity
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -20,9 +18,8 @@ import com.gyanhub.myshopmanager.model.ItemsHistory
 import com.gyanhub.myshopmanager.model.MyShopModel
 import com.gyanhub.myshopmanager.viewModel.MainFactory
 import com.gyanhub.myshopmanager.viewModel.MainViewModel
-import java.time.LocalDateTime
+import java.util.*
 
-@RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("NotifyDataSetChanged")
 class MainActivity : AppCompatActivity(), ItemClick {
     private lateinit var binding: ActivityMainBinding
@@ -60,6 +57,7 @@ class MainActivity : AppCompatActivity(), ItemClick {
         dialog = Dialog(this)
     }
 
+
     private fun bottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(this)
         bottomSheetDialog.setContentView(R.layout.apply_bottom_sheet)
@@ -67,10 +65,13 @@ class MainActivity : AppCompatActivity(), ItemClick {
         val itemName = bottomSheetDialog.findViewById<EditText>(R.id.eTxtItemName)
         val itemCount = bottomSheetDialog.findViewById<EditText>(R.id.eTxtTotalNo)
         btn?.setOnClickListener {
-            val currentDateTime = LocalDateTime.now()
+            val calendar = Calendar.getInstance()
             val currentDate =
-                "${currentDateTime.dayOfMonth}-${currentDateTime.monthValue}-${currentDateTime.year}"
-            val currentTime = "${currentDateTime.hour}:${currentDateTime.minute}"
+                "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${
+                    calendar.get(Calendar.YEAR)
+                }"
+            val currentTime =
+                "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
 
             mainModel.addShopItem(
                 MyShopModel(
@@ -161,10 +162,13 @@ class MainActivity : AppCompatActivity(), ItemClick {
         }
 
         dialog.findViewById<Button>(R.id.btnUpdate).setOnClickListener {
-            val currentDateTime = LocalDateTime.now()
+            val calendar = Calendar.getInstance()
             val currentDate =
-                "${currentDateTime.dayOfMonth}-${currentDateTime.monthValue}-${currentDateTime.year}"
-            val currentTime = "${currentDateTime.hour}:${currentDateTime.minute}"
+                "${calendar.get(Calendar.DAY_OF_MONTH)}-${calendar.get(Calendar.MONTH) + 1}-${
+                    calendar.get(Calendar.YEAR)
+                }"
+            val currentTime =
+                "${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}"
 
 
             if (type == "Used") {

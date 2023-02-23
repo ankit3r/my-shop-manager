@@ -11,7 +11,7 @@ import com.gyanhub.myshopmanager.model.MyShopModel
 interface MyShopDao {
 
     @Insert
-    suspend fun addItemsInDb(item:MyShopModel)
+     fun addItemsInDb(item:MyShopModel)
 
     @Query("SELECT * FROM MyShop")
     suspend fun getItem(): List<MyShopModel>
