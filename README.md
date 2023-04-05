@@ -1,20 +1,51 @@
-# my shop manager
+#  My Shop Manager App
 
-## objective 
- this application use to manage shop items. in this application i am useing room database to store all items and manage items
- 
-# output as Screenshot <br/>
-### This is Splash Screen
-![Screenshot_20230222_184354](https://user-images.githubusercontent.com/64691445/220630971-66a504d6-168e-467b-9acf-69d07859f3a8.jpg)<br/><br/><br/>
-### This is Home Screen
-![Screenshot_20230222_184401](https://user-images.githubusercontent.com/64691445/220630989-9890ff4d-b9c4-48b7-bf97-bde169037c92.jpg)<br/><br/><br/>
-### we can add item here
-![Screenshot_20230222_184406](https://user-images.githubusercontent.com/64691445/220631004-a027f645-a42f-4d0b-b7c5-b820a589ee94.jpg)<br/><br/><br/>
-### items look like in Home
-![Screenshot_20230222_184438](https://user-images.githubusercontent.com/64691445/220631016-8398b33c-888e-42ce-8c1e-bfdbb203e6ca.jpg)<br/><br/><br/>
-### here some data about items
-![Screenshot_20230222_184443](https://user-images.githubusercontent.com/64691445/220631030-4b621b95-ea19-4215-bf6d-0d9929243a04.jpg)<br/><br/><br/>
-### we cand update data here
-![Screenshot_20230222_184448](https://user-images.githubusercontent.com/64691445/220631039-bd53b996-d59c-41bf-b3ae-5570a1faf58f.jpg)<br/><br/><br/>
-### this is history look like
-![Screenshot_20230222_184503](https://user-images.githubusercontent.com/64691445/220631050-9a1d8a90-bdd2-497d-b4f5-1d820fae1588.jpg)
+My Shop Manager is an Android application designed to help shop owners manage their inventory easily. The app uses a Room database to store and manage shop item lists. Users can also convert the Room database data into a PDF format. Additionally, the app keeps track of the item history and displays the available items. Users can also search for specific items using the app's search functionality.
+## Features
+
+* Shop item list management using Room database
+* PDF conversion of Room database data
+* Item history tracking
+* Display of available items
+* Search functionality to search for specific items
+
+
+
+## Installation
+
+### To install the application, follow these steps:
+
+* Clone the repository to your local machine.
+* Open the project in Android Studio.
+* Build and run the application on an Android device or emulator.
+
+You can install My Shop Manager from the Google Play Store. Simply search for "My Shop Manager" in the Play Store app on your Android device and tap on the [Install](https://play.google.com/store/apps/details?id=com.gyanhub.myshopmanager) button.
+
+## Usage 
+* Upon opening the app, you will see a empity Screen .
+* Click on a Floting button to add items.
+* Click on item to view history and update items.
+* Click on toolbar pdfSave button or save button to save list of data in pdf form in your download folder.
+
+
+
+## Libraries Used
+
+* Room - For Storing data.
+* PdfBox - For converting Object to Pdf.
+* ViewModel - For managing UI-related data.
+* LiveData - For observing changes in data.
+* RecyclerView - For displaying lists of data.
+* Material Design - For implementing UI components.
+
+## Screenshots
+Here are some screenshots of the application:
+
+
+
+| ![Screenshot_20230402_173612](https://user-images.githubusercontent.com/64691445/230059673-9705fe99-74c5-4718-aeed-78188c0557e5.jpg)| ![Screenshot_20230402_173641](https://user-images.githubusercontent.com/64691445/230059742-ac202817-c25b-440c-8b1e-ddc98787bf6e.jpg) |![Screenshot_20230402_173717](https://user-images.githubusercontent.com/64691445/230059785-09182143-0539-413e-b705-b3b11de779dc.jpg) |
+| :---:   | :---: | :---: |
+|![Screenshot_20230402_173615](https://user-images.githubusercontent.com/64691445/230059716-023fe719-b860-487e-8f1d-02a93360783a.jpg)  |   ![Screenshot_20230402_173652](https://user-images.githubusercontent.com/64691445/230059751-7fa05e72-b74d-47cf-84e4-a9f3ca8bf85b.jpg) | ![Screenshot_20230402_173711](https://user-images.githubusercontent.com/64691445/230059767-41eb965f-f730-4e4c-b87f-a833f50af527.jpg)|
+ |![Screenshot_20230402_173723](https://user-images.githubusercontent.com/64691445/230059804-43dc8c1d-7831-498a-8433-ef8a2eaa56e0.jpg)|![Screenshot_20230402_173701](https://user-images.githubusercontent.com/64691445/230059812-548bc735-789a-463c-b45d-c9b050a1ada6.jpg)
+
+
