@@ -38,7 +38,7 @@ You can install My Shop Manager from the Google Play Store. Simply search for "M
 * RecyclerView - For displaying lists of data.
 * Material Design - For implementing UI components.
 
-## Screenshots
+## Screenshot
 Here are some screenshots of the application:
 
 
